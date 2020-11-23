@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>STUDENT LOGIN</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+</body>
+<div class="container-fluid text-center bg-light pt-2 pb-3 shadow">
+	<h4>
+		<b><a th:href="@{/}" style="color: black;">PRIME SCORE</a></b>
+	</h4>
+</div>
+<div class="text-center">Choose an account type with whome you
+	want to sign up</div>
+<br />
+<div class="container">
+	<div class="row mt-5">
+		<div class="col-sm-6 offset-sm-3">
+			<div class="card bg-light">
+				<div class="card-body">
+					<br />
+					<div class="form-group">
+						<a class="btn btn-warning btn-lg btn-block"
+							th:href="@{/signup-student}">SIGN UP AS
+							STUDENT</a>
+					</div>
+					<br />
+					<div class="form-group">
+						<a class="btn btn-warning btn-lg btn-block"
+							th:href="@{/signup-teacher}">SIGN UP AS
+							TEACHER</a>
+					</div>
+					<br />
+					<div class="form-group">
+						<a class="btn btn-warning btn-lg btn-block"
+							th:href="@{/signup-parent}">SIGN UP AS
+							PARENT</a>
+					</div>
+					<br />
+					<p align="center">
+						Alredy have an account ? <a th:href="@{/loginchoose}">login here</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

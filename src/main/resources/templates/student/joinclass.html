@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- <meta http-equiv = "refresh" content = "3; url = http://localhost:8082/student/" /> -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <title>Primescore-joinclass</title>
+  </head>
+  <body class="bg-light">
+    <div class="container-fluid text-center bg-light pt-2 pb-3 shadow">
+        <h4>
+            <b><a th:href="@{/}" style="color: black;">PRIME SCORE</a></b>
+        </h4>
+    </div>
+    <div class="row mt-5">
+        <div class="col-sm-4 offset-sm-4 bg-white shadow">
+            <form class="mt-3 px-4 py-4" th:action="@{/student/dojoin}" method="POST">
+            <div class="alert text-center" th:if="${session.messageclass}" th:classappend="${session.messageclass.type}" role="alert">
+							<p th:text="${session.messageclass.content}"></p></div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Class code</label>
+                    <input type="text" required="required" class="form-control" name="classcode" placeholder="Enter class code" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    </div>
+                  <div class="text-center">
+                      <button type="submit" class="btn btn-warning">Submit</button>
+                  </div>
+                </form>
+        </div>
+    </div>
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-12">
+    <div class="text-center mt-5">
+                <a th:href="@{/student/}"><i class="fas fa-arrow-circle-left fa-3x"></i></a>
+                </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="teacher/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title></title>
+</head>
+<body class="bg-light">
+	<section>
+		<div class="container">
+			<div class="row justify-content mt-5">
+				<div th:each="c:${classes}">
+				<a th:href=@{/teacher/class/{data}(data=${c.classcode})} style="text-decoration: none;color: black;">
+					<div class="card mt-3 ml-4 shadow">
+						<div class="card-header">
+							<h3 class="mr-5" th:text="${c.name}"></h3>
+						</div>
+						<div class="card-body">
+							<blockquote class="blockquote mb-0">
+								<p>
+									<span th:text="${c.teacher.name}"></span><b>.</b>&nbsp;<span
+										th:text="${c.standrad}"></span>
+								</p>
+								<p>classcode : <span th:text="${c.classcode}"></span></p>
+								<hr />
+								<footer class="blockquote-footer">
+									<span th:text="${c.descrip}"></span>
+								</footer>
+							</blockquote>
+						</div>
+					</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

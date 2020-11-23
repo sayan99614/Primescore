@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="teacher/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title></title>
+</head>
+<body class="bg-light">
+	<section>
+		<div class="container">
+			<div class="row mt-5">
+				<div class="col-sm-4 mt-4" th:each="q:${quiz}">
+				<div class="card shadow">
+				<h2 class="card-header" th:text="${q.name}"></h2>
+				<div class="card-body">
+				<h6 style="font-family: cursive;" th:text="${q.Description}"></h6>
+				<hr />
+				<a th:href="@{'/teacher/addquestion/'+${q.id}}" class="btn btn-primary">ADD QUESTIONS</a>&nbsp;
+				<a href="#" class="btn btn-primary" th:unless="${check}">EDIT QUESTIONS</a>
+				</div>
+				</div>
+				</div>
+		</div>
+		</div>
+		
+	</section>
+</body>
+</html>

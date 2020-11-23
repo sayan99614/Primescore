@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="teacher/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title></title>
+</head>
+<body class="bg-light">
+	<section>
+		<div class="container mt-3">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card bg-success shadow">
+						<div class="mt-2">
+							<div class="text-center"><h2 class="text-uppercase mt-2"
+										><img th:src="@{/img/blackboard.png}" style="max-width: 35px;" alt="" />&nbsp;<span th:text="${class.name}"></span></h2></div>
+							<div class="text-center"><h3 class="text-uppercase  mt-2">
+										<img th:src="@{/img/classcode.JPG}" style="max-width: 35px" alt="" />&nbsp;</i>Classcode : <span th:text="${class.classcode}" id="classcode"></span>
+									</h3></div>
+						</div>
+						<hr />
+						<div class="text-center">
+						<h3 class="text-uppercase">
+						<img th:src="@{/img/teacher.png}" style="max-height: 40px;" alt="" /> </i>&nbsp;<span th:text="${class.teacher.name}"></span> : : <span
+											th:text="${class.standrad}"></span>
+									</h3>
+						</div>
+						
+					</div>
+					<div class="text-center mt-2">
+					<button th:if="${class.status}==false" class="btn btn-success" th:onclick="|islocked(${class.id},true)|"><i class="fas fa-lock"></i>&nbsp;LOCK CLASS</button>
+					<button th:unless="${class.status}==false" class="btn btn-success" th:onclick="|unlock(${class.id},false)|"><i class="fas fa-unlock"></i>&nbsp;UNLOCK CLASS</button>
+					&nbsp;
+				<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-info"><i class="fas fa-edit fa-sm"></i>&nbsp;EDIT CLASS</button> 
+				&nbsp;<button type="button" data-toggle="modal" data-target="#assignmentmodel" class="btn btn-primary mr-2"><i class="fas fa-file-word fa-sm"></i>&nbsp;GIVE ASSIGNMENTS</button> 
+		<button type="button" th:onclick="|del(${class.id})|" class="btn btn-danger"><i class="fas fa-trash-alt"></i>&nbsp;DELETE CLASS</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="text-center mt-3">
+			<h3>CLASS STUDENTS LIST</h3>
+		</div>
+		<div class="container">
+		  
+  <input class="form-control" id="myInput" type="text" placeholder="search student by name or email ">
+		</div>
+		<div class="container mt-2">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="card shadow">
+						
+						<table class="table">
+							<thead class="bg-light">
+								<tr>
+									<th scope="col">STUDENT</th>
+									<th scope="col">STUDENT EMAIL</th>
+									<th scope="col"></th>
+									<th scope="col">NAME</th>
+								</tr>
+							</thead>
+							<tbody id="myTable">
+								<tr th:each="s:${class.student}">
+									<th scope="row"><i class="fas fa-user-tie fa-lg"></i></th>
+									<td th:text="${s.email}"></td>
+									<td></td>
+									<td class="text-uppercase" th:text="${s.name}"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- The Modal -->
+  <div class="modal" id="myModal" th:object="${class}">
+    <div class="modal-dialog bg-success">
+      <div class="modal-content">
+      
+        
+        <div class="modal-header">
+          <h4 class="modal-title">EDIT CLASS</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+		<form id="myform" th:action="@{/teacher/editclass}" method="POST">
+		<div class="form-group">
+		    <input type="hidden" class="form-control" name="id"  th:value="${class.id}">
+		  </div>
+		<div class="form-group">
+		    <input type="hidden" class="form-control" name="classcode"  th:value="${class.classcode}">
+		  </div>  
+		  <div class="form-group">
+		    <label for="exampleInputEmail1">Classname</label>
+		    <input type="text" class="form-control" name="name"  th:value="${class.name}">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleInputPassword1">Description</label>
+		    <textarea class="form-control" name="descrip" th:text="${class.descrip}"></textarea>
+		  </div>
+		  <div class="modal-footer">
+        <button type="submit" class="btn btn-success">UPDATE</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+        </div>
+		</form>
+        </div>  
+      </div>
+    </div>
+  </div>
+  <!-- model end -->
+  <!-- model start -->
+  <div class="modal" id="assignmentmodel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Assignments</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" th:object="${assignment}">
+      <div class="text-center" id="tick" style="display: none;">
+      <i class="far fa-check-circle fa-10x"></i>
+      </div>
+      
+       <form th:action="@{'/teacher/giveassignment/'+${class.id}}" id="assignform" method="POST"
+       enctype="multipart/form-data">
+		  <div class="form-group">
+		    <label>Assignment Name</label>
+		    <input type="text" name="name" class="form-control" placeholder="Enter assignment name">
+		  </div>
+		  <div class="form-group">
+		    <label>Upload File</label>
+		    <input type="file" name="file_url" class="form-control-file">
+		  </div>
+		  <!-- Modal footer -->
+      <div class="modal-footer">
+      	<button type="button" th:onclick="|giveassignment(${class.id})|" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- model end -->
+	</section>
+</body>
+</html>

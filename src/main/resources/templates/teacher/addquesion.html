@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="teacher/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title></title>
+</head>
+<body class="bg-light">
+	<section th:object="${quiz}">
+		<div class="container-fluid">
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body shadow">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <span class="fas fa-question-circle fa-2x" th:text="${quiz.name}">&nbsp;</span>
+                                </div>
+                                <div >
+                                    <button type="button" class="btn btn-warning mr-2" data-toggle="modal" data-target="#myModal">Assign</button> 
+                                    <a th:href="@{'/teacher/preview/'+${quiz.id}}" class="btn btn-info">preview</a>
+                                </div>
+                           </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container mt-3">
+                <div class="row">
+                    <div class="col-sm-10 offset-sm-2">
+                        <form th:action="@{'/teacher/qun/'+${quiz.id}}" method="POST">
+                        <div class="card mb-3">
+                            <div class="card-body shadow">
+                                    <div class="w-25">
+                                        <select class="form-control form-control-sm ">
+                                            <option>MCQ</option>
+                                            <option>Short Answer</option>
+                                          </select>
+                                    </div>
+                                    <div class="form-group mt-2">
+                                        <label for="exampleFormControlTextarea1">Enter Question</label>
+                                        <textarea class="form-control" name="content" rows="3"></textarea>
+                                      </div>
+                                      <label for="exampleFormControlTextarea1">Select Correct Response</label>
+                                    <div class="offset-sm-1 w-75">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <div class="input-group-text">
+                                              <input type="radio" aria-label="Radio button for following text input" name="correct" value="1">
+                                              </div>
+                                            </div>
+                                            <input type="text" name="answerContent1" placeholder="enter answer" class="form-control" aria-label="Text input with radio button">
+                                          </div>
+                                          <br>
+                                          <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <div class="input-group-text">
+                                              <input type="radio" aria-label="Radio button for following text input" name="correct" value="2">
+                                              </div>
+                                            </div>
+                                            <input type="text" placeholder="enter answer" name="answerContent2" class="form-control" aria-label="Text input with radio button">
+                                          </div>
+                                          <br>
+                                          <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <div class="input-group-text">
+                                              <input type="radio" aria-label="Radio button for following text input" name="correct" value="3">
+                                              </div>
+                                            </div>
+                                            <input type="text" placeholder="enter answer" name="answerContent3" class="form-control" aria-label="Text input with radio button">
+                                          </div>
+                                            <br>
+                                          <div class="input-group">
+                                            <div class="input-group-prepend">
+                                              <div class="input-group-text">
+                                              <input type="radio" aria-label="Radio button for following text input" name="correct" value="4">
+                                              </div>
+                                            </div>
+                                            <input type="text" placeholder="enter answer" name="answerContent4" class="form-control" aria-label="Text input with radio button">
+                                          </div>
+                                    </div>  
+                                    
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <div>
+                                            <label for="exampleFormControlTextarea1">Grade</label><br>
+                                            <span><input style="width: 40px;" type="number" placeholder="1">&nbsp;points</span>
+                                        </div>
+                                        <div>
+                                            <button id="add_" type="button" class="btn btn-outline-info btn-round-sm btn-sm"><span class="fas fa-plus fa-lg"></span>&nbsp;Add more</button>
+                                        </div>
+                                   </div>
+                                    
+                                   
+                                
+                            </div>
+                        </div>
+                        <div class="append_html">
+                            
+                        </div>
+                        
+                        <div class="mt-5">
+                                   <button type="submit" class="btn btn-warning btn-round-lg btn-block w-50 offset-sm-3">submit</button>
+                                   </div>
+                        </form>
+                    </div>
+                        
+                </div>
+                    
+            </div>
+            <!-- Modal -->
+	<div id="myModal" class="modal fade" role="dialog">
+  	<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Assign Quiz</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="qassignform">
+		  <div class="form-group">
+		  <label for="sel1">SELECT CLASS</label>
+		  <select class="form-control" name="classname"  id="sel1">
+		    <option th:each="c:${teacher.classes}" th:text="${c.name}">
+		    </option>
+		  </select>
+		</div>
+		  <div class="form-group">
+		  <label for="appt">Start Time:</label>
+  			<input type="time" id="appt" name="appt">&nbsp;<label for="appt">End Time:</label>
+  			<input type="time" id="appt" name="appt">
+		  </div>
+
+	<div class="modal-footer">
+		<button type="submit" th:onclick="|assquiz(${quiz.id})|" class="btn btn-primary">Submit</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+		  
+</form>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@3.1.0/js/froala_editor.pkgd.min.js"></script>
+            <script>
+            var editor = new FroalaEditor('#example');
+            </script>
+            <script>
+           function assquiz(id){
+        	   var form = $('#qassignform').serialize();
+        	   $.ajax({
+     			  url:"/teacher/assignquiz/"+id,
+     			  data:form,
+     			  type:'POST',
+     			  success:function(data, textStatus, jqXHR){
+     				console.log(data);  
+     				console.log("success"); 
+     				
+     			  },
+     			  error(xhr,status,error){
+     				  console.log(data); 
+     				   
+     			  }
+     			  
+     		  })
+           }
+            </script>
+            
+            
+            <script>
+            $(document).ready(function(){
+                console.log("ready")
+               $(this).on("click","#add_",function(){
+                   var html='<div class="card rmv mb-3"><div class="card-body shadow"><div class="w-25"><select class="form-control form-control-sm "><option>MCQ</option><option>Short Answer</option></select></div><div class="form-group mt-2"><label for="exampleFormControlTextarea1">Enter Question</label><textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></div><label for="exampleFormControlTextarea1">Select Correct Response</label><div class="offset-sm-1 w-75"><div class="input-group"><div class="input-group-prepend"><div class="input-group-text"><input type="radio" aria-label="Radio button for following text input" name="answer"></div></div><input type="text" placeholder="enter answer" class="form-control" aria-label="Text input with radio button"></div><br><div class="input-group"><div class="input-group-prepend"><div class="input-group-text"><input type="radio" aria-label="Radio button for following text input" name="answer"></div></div><input type="text" placeholder="enter answer" class="form-control" aria-label="Text input with radio button"></div><br><div class="input-group"><div class="input-group-prepend"><div class="input-group-text"><input type="radio" aria-label="Radio button for following text input" name="answer"></div></div><input type="text" placeholder="enter answer" class="form-control" aria-label="Text input with radio button"></div><br><div class="input-group"><div class="input-group-prepend"><div class="input-group-text"> <input type="radio" aria-label="Radio button for following text input" name="answer"></div></div><input type="text" placeholder="enter answer" class="form-control" aria-label="Text input with radio button"> </div></div>  <div class="d-flex justify-content-between mt-3"><div><label for="exampleFormControlTextarea1">Grade</label><br><span><input style="width: 40px;" type="number" placeholder="1">&nbsp;points</span></div><div><button id="add_" type="button" class="btn btn-outline-info btn-round-sm btn-sm"><span class="fas fa-plus fa-lg"></span>&nbsp;Add more</button></div></div></div>&nbsp;<button id="remove" class="btn btn-sm btn-outline-danger">Remove</button></div>';
+                   $(".append_html").append(html);
+                   
+               }); 
+                
+                 $(this).on("click","#remove",function(){
+                    var target=$(this).parent();
+                    target.remove();
+                });
+                
+            });
+            </script>
+	</section>
+</body>
+</html>

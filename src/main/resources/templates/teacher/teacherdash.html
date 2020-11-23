@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="teacher/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<title>Primescore|teacher</title>
+</head>
+<body>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="card mt-3 mb-5 shadow-sm">
+						<div class="card-body">
+								<h4 class="bg-dark text-white shadow">
+									<span class="fas fa-user-alt fa-lg"></span>&nbsp;<span
+									th:text="${user.name}"></span>
+								</h4>
+							
+							<a style="text-decoration: none" class="ml-5" href="" th:href="@{/teacher/viewprofile/{data}(data=${user.email})}">view profile</a>
+						</div>
+					</div>
+					<div class="card mt-3 mt-5">
+						<div class="card-body shadow">
+							<div class="d-flex justify-content-between">
+								<div>
+									<span>MY CLASSES</span>
+								</div>
+								<div>
+									<!-- drop -->
+									<div class="dropdown">
+
+										<!--Trigger-->
+
+										<a type="button" id="dropdownMenu2" data-toggle="dropdown"
+											aria-haspopup="true" aria-expanded="false"><i
+											class="fas fa-ellipsis-v"></i></a>
+
+
+										<!--Menu-->
+										<div class="dropdown-menu dropdown-primary">
+											<a class="dropdown-item" th:href="@{/teacher/classcreateshow}">+ CREATE
+												CLASS</a><hr /> <a class="dropdown-item" href="#">+GIVE ASSIGNMENT
+												</a><hr /> <a class="dropdown-item"
+												href="#">+ Create Quiz</a>
+										</div>
+									</div>
+									<!-- end -->
+								</div>
+							</div>
+							<hr>
+							<span th:each="c:${classes}"> <a style="text-decoration: none;color: black;" th:href="@{/teacher/class/{data}(data=${c.classcode})}"><span
+								class="text-uppercase" th:text="${c.name}"></span></a>
+								<hr>
+							</span> <span><a style="text-decoration: none" th:href="@{/teacher/allclasses}">SHOW ALL CLASSES</a></span>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="card shadow mt-3">
+						<img class="card-img-top" th:src="@{/img/card.jpg}"
+							alt="Card image cap">
+						<div class="card-body">
+							<p>Create a class or join an existing class or school and
+								start communicating with students and parents, and share digital
+								assignments, quizzes, and more.</p>
+							<div class="text-center">
+								
+							 <a th:href="@{/teacher/classcreateshow}"
+									class="btn btn-warning btn-block">create class</a>
+							</div>
+						</div>
+					</div>
+					<!-- create test -->
+					<div class="card shadow mt-3">
+						<div class="text-center bg-light">
+							<img class="card-img-top" th:src="@{/img/ask.png}"
+								style="width: 150px;" alt="Card image cap">
+						</div>
+						<div class="card-body">
+							<p>create quiz for students by primescore easily you can
+								crate a quiz for your calss</p>
+							<div class="text-center">
+								<button  class="btn btn-warning" data-toggle="modal" data-target="#myModal">+
+									Create Quiz</button>&nbsp;
+									<a th:href="@{/teacher/allquiz}"  class="btn btn-warning">
+									View All Quiz</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3 mt-5">
+
+					<div class="mt-1">
+						<small>
+							<p>
+								&nbsp;&nbsp;<a href="#">About</a>&nbsp;<b>.</b>&nbsp;<a href="#">Contact
+									us<br>
+								</a>&nbsp;<b>.</b>&nbsp;<a href="#">Facebook</a>&nbsp;<b>.</b>&nbsp;<a
+									href="#">Twitter</a>&nbsp;<b>.</b>&nbsp;<a href="#">Instagram</a>
+							</p>
+						</small>
+					</div>
+					<small class="mt-2"><p>&nbsp;&nbsp;Primescore Ⓒ 2020</p></small>
+				</div>
+			</div>
+		</div>
+		<div id="myModal" class="modal fade" role="dialog">
+  		<div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+      <h4 class="modal-title ">CREATE QUIZ</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" th:action="@{/teacher/createquiz}" id="quizform" th:object="${quiz}">
+	  <div class="form-group">
+	    <label for="name">Quiz Name</label>
+	    <input type="text" name="name" class="form-control"  placeholder="Enter Quiz name">
+	  </div>
+	  <div class="form-group">
+	    <label>Description</label>
+    	<textarea class="form-control" name="Description" placeholder="Enter quiz description" id="Textarea" rows="2"></textarea>
+	  </div>
+	  <div class="modal-footer">
+	  <button type="submit" id="quizsub" class="btn btn-primary">Submit</button>
+	  <a th:href="@{/teacher/allquiz}" id="addqun" style="display: none;" class="btn btn-primary">VIEW QUIZ</a>
+      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+  
+</form>
+      </div> 
+    </div>
+
+  </div>
+</div>
+	</section>
+</body>
+</html>
